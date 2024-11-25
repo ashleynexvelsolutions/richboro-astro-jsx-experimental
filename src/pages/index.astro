@@ -1,11 +1,21 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const pages = await getCollection('pages');
 ---
-
-<Layout>
-	<Welcome />
-</Layout>
+<ul>
+  {pages.map((page) => (
+    <li key={page.data.id}>
+      <a href={`/pages/${page.data.slug}/`}>{page.data.title}</a>
+      {page.data.children.length > 0 && (
+        <ul>
+          {page.data.children.map((child) => (
+            <li key={child.id}>
+              <a href={`/${child.slug}/`}>{child.title}</a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+</ul>
