@@ -1,8 +1,9 @@
+import { defineCollection } from "astro:content";
 import { request, gql } from "graphql-request";
 
-const endpoint = process.env.WORDPRESS_API_URL; // Ensure this points to your GraphQL endpoint
+const endpoint = process.env.WORDPRESS_API_URL; // Ensure this environment variable is set
 
-export async function getHeaderData() {
+const fetchHeaderData = async () => {
   const query = gql`
     query HeaderData {
       acfOptionsCommonItems {
@@ -50,13 +51,28 @@ export async function getHeaderData() {
   try {
     const data = await request(endpoint, query);
 
+    // Ensure the query returns data
     if (data) {
-      return data; // Adjust based on the structure you need to return
+      return {
+        id: "header", // Add a unique ID for the header
+        ...data,
+      };
     } else {
       throw new Error("Failed to fetch header data");
     }
   } catch (error) {
     console.error("Error fetching header data:", error);
-    throw error; // Rethrow the error for better handling by the caller
+    throw error;
   }
-}
+};
+
+const headerCollection = defineCollection({
+  loader: async () => {
+    const headerData = await fetchHeaderData();
+
+    // Return the header data in an array format
+    return [headerData];
+  },
+});
+
+export default headerCollection;

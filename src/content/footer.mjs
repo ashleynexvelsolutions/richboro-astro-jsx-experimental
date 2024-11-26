@@ -1,8 +1,9 @@
+import { defineCollection } from "astro:content";
 import { request, gql } from "graphql-request";
 
-const endpoint = process.env.WORDPRESS_API_URL; // Replace with your GraphQL endpoint
+const endpoint = process.env.WORDPRESS_API_URL;
 
-export async function getFooterData() {
+const fetchFooterData = async () => {
   const query = gql`
     query FooterData {
       acfOptionsCommonItems {
@@ -56,12 +57,29 @@ export async function getFooterData() {
   try {
     const data = await request(endpoint, query);
     if (data && data.acfOptionsCommonItems) {
-      return data.acfOptionsCommonItems.commonItems;
+      return {
+        id: "footer", // Static ID since there's likely only one footer
+        ...data.acfOptionsCommonItems.commonItems,
+      };
     } else {
       throw new Error("No footer data found");
     }
   } catch (error) {
     console.error("Failed to fetch footer data:", error);
-    throw error; // Rethrowing the error allows for better error handling by the caller
+    throw error;
   }
-}
+};
+
+const footerCollection = defineCollection({
+  loader: async () => {
+    try {
+      const footerData = await fetchFooterData();
+      return Array.isArray(footerData) ? footerData : [footerData]; // Wrap in an array if necessary
+    } catch (error) {
+      console.error("Error loading footer data:", error);
+      return {}; // Return an empty object if fetching fails
+    }
+  },
+});
+
+export default footerCollection;

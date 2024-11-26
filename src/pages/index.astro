@@ -10,14 +10,14 @@ const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'pa
   {topLevelPages.map((page, i) => {
 
     return (
-    <li key={i}>
+    <li>
       <a href={page.data.uri}>{page.data.title}</a>
       {page.data.children.length > 0 && (
         <ul>
           {page.data.children.map((child) => {
             
             return (
-            <li key={i}>
+            <li>
               <a href={child.uri}>{child.title}</a>
             </li>
           )})}
