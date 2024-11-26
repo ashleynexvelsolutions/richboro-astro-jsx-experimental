@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/Layout.astro";
+
+// Define getStaticPaths to generate all dynamic routes
+export async function getStaticPaths() {
+  // Fetch all pages from the Content Layer
+  const routes = await getCollection("routes");
+
+  return routes.map((page) => ({
+    params: { slug: page.data.uri.replace(/^\/|\/$/g, "") }, // Use URI as a single string slug
+    props: { id: page.data.id }, // Pass the full page data as props
+  }));
+}
+// Get the `id` prop passed from getStaticPaths
+const { id } = Astro.props;
+// Fetch all pages from the "pages" collection
+const pages = await getCollection("pages");
+
+// Find the specific page by its `id`
+const page = pages.find((p) => p.id === id);
+
+if (!page) {
+  throw new Error(`Page not found for ID: ${id}`);
+}
+
+// Destructure the necessary data from the page
+const { title, seo, featuredImage, contentSection1, contentSection2, faqs, contentSection3 } = page.data;
+---
+<Layout>
+    <h1>{title}</h1>
+    <section>
+      <h2>SEO Information</h2>
+      <p>Meta Description: {seo.metaDesc}</p>
+      <p>OpenGraph Title: {seo.opengraphTitle}</p>
+    </section>
+    <section>
+      <h2>Featured Image</h2>
+      {featuredImage?.node?.sourceUrl && (
+        <img src={featuredImage.node.sourceUrl} alt={seo.title} />
+      )}
+    </section>
+    <section>
+      <h2>Content Section 1</h2>
+      <div set:html={contentSection1?.contentSection1?.content}></div>
+  
+      {contentSection1?.contentSection1?.image?.sourceUrl && (
+        <img
+          src={contentSection1.contentSection1.image.sourceUrl}
+          alt={contentSection1.contentSection1.altText}
+          width={contentSection1.contentSection1.image.mediaDetails.width}
+          height={contentSection1.contentSection1.image.mediaDetails.height}
+        />
+      )}
+    </section>
+   
+</Layout>

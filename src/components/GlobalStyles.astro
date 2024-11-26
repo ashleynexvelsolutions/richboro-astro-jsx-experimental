@@ -1,0 +1,72 @@
+<style is:global>
+    * {
+  @apply box-border;
+}
+
+body {
+  @apply !font-primary;
+  text-size-adjust: 100%;
+}
+
+.title {
+  @apply rfs:!text-[7rem] lg:rfs:!text-[5.11669rem] uppercase rfs:leading-[6.14419rem];
+}
+
+.page h1 {
+  @apply rfs:text-[9.75rem] lg:rfs:text-[4.3rem] rfs:leading-[12rem] lg:rfs:leading-[6.14419rem] mb-4 lg:mb-0;
+}
+
+.page h2 {
+  @apply rfs:text-[6rem] lg:rfs:text-[3rem] rfs:leading-[8rem] lg:rfs:leading-[4.375rem] mb-4;
+}
+.page h3 {
+  @apply rfs:text-[4rem] lg:rfs:text-[2.5rem] rfs:leading-[8rem] lg:rfs:leading-[4.375rem] mb-4;
+}
+.page p,
+.page li {
+  @apply text-2xl lg:rfs:text-[2.1875rem] leading-normal;
+}
+.page ul {
+  @apply list-inside list-disc;
+}
+
+/* For popup videos */
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@media (min-width: 1024px) {
+  .react-player {
+    max-width: 70%;
+    margin: 0 auto;
+  }
+}
+/* End for popup videos*/
+
+/*Testimonial Slider*/
+.testimonialsSlider .splide__pagination__page {
+  height: 1rem !important;
+  width: 1rem !important;
+}
+.testimonialsSlider .splide__pagination__page.is-active {
+  transform: none !important;
+}
+
+@media (min-width: 1024px) {
+  .testimonialsSlider .splide__slide {
+    width: 101% !important;
+  }
+}
+
+/*End Testimonial Slider*/
+.pdfText {
+  display: flex;
+  column-gap: 0.5rem;
+}
+
+  </style>
+  

@@ -1,0 +1,25 @@
+[images]
+  remote_images = ["https://wordpress-1096095-5062083.cloudwaysapps.com/wp-content/uploads/.*"]
+
+[[redirects]]
+  from = "http://test.netlify.app/*"
+  to = "https://test.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://test.netlify.app/*"
+  to = "https://test.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/articles/*"
+  to = "/general"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self' noembed.com *.netlify.com *.netlify.app *.cloudwaysapps.com; style-src 'self' data: 'unsafe-inline' *.googleapis.com *.netlify.com *.netlify.app; form-action 'self' *.netlify.com *.netlify.app; script-src 'self' 'unsafe-inline' 'unsafe-eval' *.vimeo.com *.birdeye.com birdeye.com localreviews.buzz *.google-analytics.com *.googletagmanager.com *.netlify.app *.iconnode.com *.googleapis.com *.gstatic.com; connect-src 'self' vimeo.com *.iconnode.com www.google-analytics.com www.googletagmanager.com; base-uri 'self'; font-src 'self' data: fonts.gstatic.com; frame-src 'self' *.birdeye.com birdeye.com *.vimeo.com *.netlify.com *.netlify.app *.google.com;"

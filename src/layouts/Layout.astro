@@ -1,22 +1,121 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import '../components/GlobalStyles.astro'
+import { Footer } from '../components/Footer'
+import { FooterFunction, HeaderFunction } from '../DataImports'
+import { resolve } from "path";
+import { AstroFont } from "astro-font";
+import { Header } from '../components/Header'
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+let headerData
+let footerData
+try {
+    headerData = await HeaderFunction()
+    footerData = await FooterFunction()
+  } catch (error) {
+    console.error('Failed to fetch data:', error)
+  }
+---
+<html
+  lang="en"
+>
+<head>
+  <AstroFont
+    config={[
+      {
+        src: [],
+        name: "Ramaraja",
+        // Google Fonts URL
+        googleFontsURL: 'https://fonts.googleapis.com/css2?family=Ramaraja&display=swap',
+        preload: true,
+        display: "swap",
+        selector: "body",
+        fallback: "serif",
+      },
+      {
+          name: "Gotham",
+          src: [
+            {
+              weight: '500',
+              style: 'medium',
+              path: resolve(process.cwd(), 'public', 'fonts', 'Gotham', 'GothamMedium.woff2')
+            },
+            {
+              weight: '700',
+              style: 'bold',
+              path: resolve(process.cwd(), 'public', 'fonts', 'Gotham', 'GothamBold.woff2')
+            }
+          ],
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+        {
+          name: "LTCBodoni175Pro",
+          src: [
+            {
+              weight: '400',
+              style: 'normal',
+              path: resolve(process.cwd(), 'public', 'fonts', 'LTCBodoni175Pro', 'ltc-bodoni-175-pro-regular.woff2')
+            },
+          ],
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "serif",
+        },
+        {
+          name: "ProximaNova",
+          src: [
+            {
+              weight: '300',
+              style: 'light',
+              path: resolve(process.cwd(), 'public', 'fonts', 'ProximaNova', 'ProximaNova-Light.woff2')
+            },
+            {
+              weight: '400',
+              style: 'normal',
+              path: resolve(process.cwd(), 'public', 'fonts', 'ProximaNova', 'ProximaNova-Regular.woff2')
+            },
+            {
+              weight: '600',
+              style: 'semibold',
+              path: resolve(process.cwd(), 'public', 'fonts', 'ProximaNova', 'ProximaNova-Semibold.woff2')
+            },
+            {
+              weight: '700',
+              style: 'bold',
+              path: resolve(process.cwd(), 'public', 'fonts', 'ProximaNova', 'ProximaNova-Bold.woff2')
+            },
+          ],
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+    ]}
+  />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <slot name="head" />
+</head>
+  <body class="relative bg-gray-lightest">
+    <div class="bg-white text-2xl relative">
+      <Header headerData={headerData} client:load />
+      <slot />
+      <Footer footerData={footerData} />
+    </div> 
+    <script
+          type="text/partytown"
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-EQH496LMM2"
+        />
+        <script type="text/partytown">
+          window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-EQH496LMM2');
+          </script>
+  </body>
+</html>

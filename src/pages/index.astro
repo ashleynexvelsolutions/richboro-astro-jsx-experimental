@@ -2,18 +2,23 @@
 import { getCollection } from 'astro:content';
 
 const pages = await getCollection('pages');
+
+// Filter out top-level pages (pages without parents)
+const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'parent' exists in the page data
 ---
 <ul>
-  {pages.map((page) => (
-    <li key={page.data.id}>
-      <a href={`/pages/${page.data.slug}/`}>{page.data.title}</a>
+  {topLevelPages.map((page, i) => (
+    <li key={i}>
+      <a href={page.data.uri}>{page.data.title}</a>
       {page.data.children.length > 0 && (
         <ul>
-          {page.data.children.map((child) => (
-            <li key={child.id}>
-              <a href={`/${child.slug}/`}>{child.title}</a>
+          {page.data.children.map((child) => {
+            
+            return (
+            <li key={i}>
+              <a href={child.uri}>{child.title}</a>
             </li>
-          ))}
+          )})}
         </ul>
       )}
     </li>
