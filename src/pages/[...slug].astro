@@ -7,11 +7,18 @@ export async function getStaticPaths() {
   // Fetch all pages from the Content Layer
   const routes = await getCollection("routes");
 
-  return routes.map((page) => ({
+// Generate paths for each route, excluding the root "/"
+const paths = routes
+.filter((page) => page.data.uri && page.data.uri !== '/') // Exclude root path
+.map((page) => ({
     params: { slug: page.data.uri.replace(/^\/|\/$/g, "") }, // Use URI as a single string slug
-    props: { id: page.data.id }, // Pass the full page data as props
-  }));
+      props: { id: page.data.id }, // Pass additional props if needed
+    }));
+
+    return paths; // Only return non-root paths
+  
 }
+
 // Get the `id` prop passed from getStaticPaths
 const { id } = Astro.props;
 // Fetch all pages from the "pages" collection

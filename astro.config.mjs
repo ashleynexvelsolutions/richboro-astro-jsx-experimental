@@ -5,7 +5,6 @@ import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
-  // ...other configurations
   build: {
     outDir: "dist",
     pages: async () => {
