@@ -16,6 +16,11 @@ const fetchPageRoutes = async () => {
           id
           uri
           title
+          parent {
+            node {
+              id
+            }
+          }
           children {
             nodes {
               id
@@ -23,6 +28,11 @@ const fetchPageRoutes = async () => {
               ... on Page {
                 id
                 title
+                parent {
+                  node {
+                    id
+                  }
+                }
               }
             }
           }
@@ -56,10 +66,12 @@ const routesCollection = defineCollection({
       id: route.id,
       uri: route.uri,
       title: route.title,
+      parent: route.parent,
       children: route.children.nodes.map((child) => ({
         id: child.id,
         title: child.title,
         uri: child.uri,
+        parent: child.parent,
       })),
     }));
   },

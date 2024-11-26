@@ -1,13 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
+import Layout from "../layouts/Layout.astro";
 
 const pages = await getCollection('routes');
 
 // Filter out top-level pages (pages without parents)
 const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'parent' exists in the page data
+
 ---
+<Layout>
 <ul>
-  {topLevelPages.map((page, i) => {
+  {topLevelPages.map(page => {
 
     return (
     <li>
@@ -26,3 +29,4 @@ const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'pa
     </li>
   )})}
 </ul>
+</Layout>
