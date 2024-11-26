@@ -1,13 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
 
-const pages = await getCollection('pages');
+const pages = await getCollection('routes');
 
 // Filter out top-level pages (pages without parents)
 const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'parent' exists in the page data
 ---
 <ul>
-  {topLevelPages.map((page, i) => (
+  {topLevelPages.map((page, i) => {
+
+    return (
     <li key={i}>
       <a href={page.data.uri}>{page.data.title}</a>
       {page.data.children.length > 0 && (
@@ -22,5 +24,5 @@ const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'pa
         </ul>
       )}
     </li>
-  ))}
+  )})}
 </ul>
