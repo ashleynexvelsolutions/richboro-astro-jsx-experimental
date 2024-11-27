@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-import { Image } from '@unpic/react'
-import { ReactSVG } from 'react-svg'
-import { Popup } from './Popup.jsx'
+import React, { useState } from "react";
+import { Image } from "@unpic/react";
+import { ReactSVG } from "react-svg";
+import { Popup } from "./Popup.jsx";
 
 const Header = ({ headerData }) => {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [apptButtonClicked, setApptButtonClicked] = useState(false)
-  const [topLevelClicked, setTopLevelClicked] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [apptButtonClicked, setApptButtonClicked] = useState(false);
+  const [topLevelClicked, setTopLevelClicked] = useState(false);
 
   function handleMenuOpen() {
     if (menuOpen === false) {
-      setMenuOpen(true)
+      setMenuOpen(true);
     } else {
-      setMenuOpen(false)
-      setTopLevelClicked(false)
+      setMenuOpen(false);
+      setTopLevelClicked(false);
     }
   }
   return (
@@ -36,8 +36,14 @@ const Header = ({ headerData }) => {
               <Image
                 className="min-w-[13.3125rem]"
                 src={`/.netlify/images?url=${headerData.acfOptionsCommonItems.commonItems.logoMobile.sourceUrl}`}
-                width={headerData.acfOptionsCommonItems.commonItems.logoMobile.mediaDetails.width}
-                height={headerData.acfOptionsCommonItems.commonItems.logoMobile.mediaDetails.height}
+                width={
+                  headerData.acfOptionsCommonItems.commonItems.logoMobile
+                    .mediaDetails.width
+                }
+                height={
+                  headerData.acfOptionsCommonItems.commonItems.logoMobile
+                    .mediaDetails.height
+                }
                 alt=""
               />
             </a>
@@ -50,9 +56,13 @@ const Header = ({ headerData }) => {
               >
                 <ReactSVG
                   src={`/.netlify/images?url=${headerData.acfOptionsCommonItems.commonItems.phoneIcon.sourceUrl}`}
-                  width={headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails.width}
+                  width={
+                    headerData.acfOptionsCommonItems.commonItems.phoneIcon
+                      .mediaDetails.width
+                  }
                   height={
-                    headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails.height
+                    headerData.acfOptionsCommonItems.commonItems.phoneIcon
+                      .mediaDetails.height
                   }
                   alt=""
                   className="[&_svg]:!max-w-[1.75rem] h-auto"
@@ -66,9 +76,13 @@ const Header = ({ headerData }) => {
             <a aria-label="go home" href="/" className="hidden lg:block">
               <Image
                 src={`/.netlify/images?url=${headerData.acfOptionsCommonItems.commonItems.logoDesktop.sourceUrl}`}
-                width={headerData.acfOptionsCommonItems.commonItems.logoDesktop.mediaDetails.width}
+                width={
+                  headerData.acfOptionsCommonItems.commonItems.logoDesktop
+                    .mediaDetails.width
+                }
                 height={
-                  headerData.acfOptionsCommonItems.commonItems.logoDesktop.mediaDetails.height
+                  headerData.acfOptionsCommonItems.commonItems.logoDesktop
+                    .mediaDetails.height
                 }
                 alt=""
                 className="!max-w-[22vw]"
@@ -84,10 +98,12 @@ const Header = ({ headerData }) => {
                     <ReactSVG
                       src={`/.netlify/images?url=${headerData.acfOptionsCommonItems.commonItems.phoneIcon.sourceUrl}`}
                       width={
-                        headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails.width
+                        headerData.acfOptionsCommonItems.commonItems.phoneIcon
+                          .mediaDetails.width
                       }
                       height={
-                        headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails.height
+                        headerData.acfOptionsCommonItems.commonItems.phoneIcon
+                          .mediaDetails.height
                       }
                       className="[&_svg]:w-[2rem]"
                     />
@@ -104,7 +120,10 @@ const Header = ({ headerData }) => {
                     onClick={() => setApptButtonClicked(true)}
                     className="text-[1.11669rem] text-nowrap border-r border-white rfs:px-[1.33rem] py-[1rem] xl:rfs:py-[2.05rem] uppercase hover:bg-gold"
                   >
-                    {headerData.acfOptionsCommonItems.commonItems.headerButtonText}
+                    {
+                      headerData.acfOptionsCommonItems.commonItems
+                        .headerButtonText
+                    }
                   </button>
                   <button
                     aria-label="open mobile menu"
@@ -123,12 +142,14 @@ const Header = ({ headerData }) => {
         </div>
       </header>
       <div
-        className={`${menuOpen ? `translate-x-0` : `-translate-x-full`} bg-green text-white fixed inset-x-0 top-0 z-10 overflow-auto min-h-screen grid items-center justify-center max-h-screen uppercase rfs:text-[3.125rem] text-center transition-transform duration-300`}
+        className={`${
+          menuOpen ? `translate-x-0` : `-translate-x-full`
+        } bg-green text-white fixed inset-x-0 top-0 z-10 overflow-auto min-h-screen grid items-center justify-center max-h-screen uppercase rfs:text-[3.125rem] text-center transition-transform duration-300`}
       >
         <button
           type="button"
           onClick={() => {
-            handleMenuOpen()
+            handleMenuOpen();
           }}
           className="absolute z-10 top-2 right-2 text-2xl lg:rfs:text-[3.125rem] hover:text-gold"
         >
@@ -148,7 +169,7 @@ const Header = ({ headerData }) => {
                 ) : (
                   <button
                     onClick={() => {
-                      setTopLevelClicked(topLevel.label)
+                      setTopLevelClicked(topLevel.label);
                     }}
                     aria-label="go to the next level"
                     type="button"
@@ -162,12 +183,16 @@ const Header = ({ headerData }) => {
 
                 {topLevel.childItems.nodes.length !== 0 && (
                   <div
-                    className={`${topLevelClicked === topLevel.label ? `translate-x-0` : `-translate-x-full`} bg-green text-white fixed inset-x-0 top-0 z-10 overflow-auto min-h-screen grid items-center justify-center max-h-screen uppercase rfs:text-[3.125rem] text-center transition-transform duration-300`}
+                    className={`${
+                      topLevelClicked === topLevel.label
+                        ? `translate-x-0`
+                        : `-translate-x-full`
+                    } bg-green text-white fixed inset-x-0 top-0 z-10 overflow-auto min-h-screen grid items-center justify-center max-h-screen uppercase rfs:text-[3.125rem] text-center transition-transform duration-300`}
                   >
                     <button
                       type="button"
                       onClick={() => {
-                        setTopLevelClicked(false)
+                        setTopLevelClicked(false);
                       }}
                       className="absolute z-10 top-2 left-2 text-2xl lg:rfs:text-[3.125rem] hover:text-gold flex gap-x-2 items-center"
                     >
@@ -177,7 +202,7 @@ const Header = ({ headerData }) => {
                     <button
                       type="button"
                       onClick={() => {
-                        handleMenuOpen()
+                        handleMenuOpen();
                       }}
                       className="absolute z-10 top-2 right-2 text-2xl lg:rfs:text-[3.125rem] hover:text-gold"
                     >
@@ -185,14 +210,15 @@ const Header = ({ headerData }) => {
                     </button>
                     <div className="grid gap-y-2 py-12">
                       <div className="text-sm pb-2 border-b-2 border-b-gold">
-                        <a href="/">Home</a> / <a href={topLevel.path}>{topLevel.label}</a>
+                        <a href="/">Home</a> /{" "}
+                        <a href={topLevel.path}>{topLevel.label}</a>
                       </div>
                       {topLevel.childItems.nodes?.map((secondLevel, i2) => {
                         return (
                           <a key={`header2-${i2}`} href={secondLevel.path}>
                             {secondLevel.label}
                           </a>
-                        )
+                        );
                       })}
                       <div className="grid gap-y-4 justify-center">
                         <div className="flex justify-center">
@@ -203,18 +229,21 @@ const Header = ({ headerData }) => {
                             <ReactSVG
                               src={`/.netlify/images?url=${headerData.acfOptionsCommonItems.commonItems.phoneIcon.sourceUrl}`}
                               width={
-                                headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails
-                                  .width
+                                headerData.acfOptionsCommonItems.commonItems
+                                  .phoneIcon.mediaDetails.width
                               }
                               height={
-                                headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails
-                                  .height
+                                headerData.acfOptionsCommonItems.commonItems
+                                  .phoneIcon.mediaDetails.height
                               }
                               className="[&_svg]:w-[2rem]"
                             />
 
                             <p className="text-nowrap rfs:text-[4rem] lg:rfs:text-[2.55075rem] tracking-widest">
-                              {headerData.acfOptionsCommonItems.commonItems.phoneNumber}
+                              {
+                                headerData.acfOptionsCommonItems.commonItems
+                                  .phoneNumber
+                              }
                             </p>
                           </a>
                         </div>
@@ -224,14 +253,17 @@ const Header = ({ headerData }) => {
                           onClick={() => setApptButtonClicked(true)}
                           className="border border-white rfs:text-[1.11669rem] text-nowrap rfs:px-[3rem] lg:rfs:px-[1.33rem] py-[1rem] xl:rfs:py-[2.05rem] uppercase hover:bg-gold tracking-widest"
                         >
-                          {headerData.acfOptionsCommonItems.commonItems.headerButtonText}
+                          {
+                            headerData.acfOptionsCommonItems.commonItems
+                              .headerButtonText
+                          }
                         </button>
                       </div>
                     </div>
                   </div>
                 )}
               </div>
-            )
+            );
           })}
           <div className="grid gap-y-4 justify-center">
             <div className="flex justify-center">
@@ -241,9 +273,13 @@ const Header = ({ headerData }) => {
               >
                 <ReactSVG
                   src={`/.netlify/images?url=${headerData.acfOptionsCommonItems.commonItems.phoneIcon.sourceUrl}`}
-                  width={headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails.width}
+                  width={
+                    headerData.acfOptionsCommonItems.commonItems.phoneIcon
+                      .mediaDetails.width
+                  }
                   height={
-                    headerData.acfOptionsCommonItems.commonItems.phoneIcon.mediaDetails.height
+                    headerData.acfOptionsCommonItems.commonItems.phoneIcon
+                      .mediaDetails.height
                   }
                   className="[&_svg]:w-[2rem]"
                 />
@@ -259,15 +295,18 @@ const Header = ({ headerData }) => {
               onClick={() => setApptButtonClicked(true)}
               className="border border-white rfs:text-[1.11669rem] text-nowrap rfs:px-[3rem] lg:rfs:px-[1.33rem] py-[1rem] xl:rfs:py-[2.05rem] uppercase hover:bg-gold tracking-widest"
             >
-              {headerData.acfOptionsCommonItems.commonItems.headerButtonText}{' '}
+              {headerData.acfOptionsCommonItems.commonItems.headerButtonText}{" "}
             </button>
           </div>
         </div>
       </div>
       {apptButtonClicked && (
-        <Popup setButtonClicked={setApptButtonClicked} setMenuOpen={setMenuOpen} />
+        <Popup
+          setButtonClicked={setApptButtonClicked}
+          setMenuOpen={setMenuOpen}
+        />
       )}
     </>
-  )
-}
-export { Header }
+  );
+};
+export { Header };
