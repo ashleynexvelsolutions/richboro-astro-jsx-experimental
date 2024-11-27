@@ -18,7 +18,20 @@ const fetchPageData = async () => {
           seo {
             title
             metaDesc
+            opengraphTitle
+            opengraphDescription
+            opengraphUrl
+            opengraphSiteName
+            opengraphType
+            opengraphImage {
+              sourceUrl
+            }
             canonical
+            twitterTitle
+            twitterDescription
+            twitterImage {
+              sourceUrl
+            }
           }
           featuredImage {
             node {

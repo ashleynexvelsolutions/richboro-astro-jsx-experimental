@@ -1,32 +1,95 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from "../layouts/Layout.astro";
+import { HomeHeroFunction, InspiringHealthySmilesFunction, VideoSectionFunction, WeLoveFamiliesFunction, GenerationalDentalCareFunction, TeamPhotoFunction, OurServicesFunction, SleepFunction, YoullLoveItHereFunction, ConnectWithUsFunction, FinancingFunction, OnlinePaymentsFunction, OrganizationsFunction, HomeSeoFunction } from '../DataImports';
+import { HomeHero } from '../components/HomeHero'
+import { YoullLoveItHere } from '../components/YoullLoveItHere'
+import { VideoSection } from '../components/VideoSection'
+import { GenerationalDentalCare } from '../components/GenerationalDentalCare'
+import { Image } from '@unpic/astro'
+import { OurServices } from '../components/OurServices';
+import { Sleep } from '../components/Sleep';
+import { ConnectWithUs } from '../components/ConnectWithUs';
+import { Financing } from '../components/Financing'
+import { OnlinePayments } from '../components/OnlinePayments'
+import Organizations from '../components/Organizations.astro';
 
-const pages = await getCollection('routes');
 
-// Filter out top-level pages (pages without parents)
-const topLevelPages = pages.filter((page) => !page.data.parent); // Assuming 'parent' exists in the page data
+
+
+
+let seoData;
+let homeHeroData;
+let inspiringHealthySmilesData;
+let videoSectionData;
+let weLoveFamiliesData;
+let generationalDentalCareData;
+let teamPhotoData;
+let ourServicesData; 
+let sleepData;
+let youllLoveItHereData;
+let connectWithUsData;
+let financingData;
+let onlinePaymentsData;
+let organizationsData;
+try {
+    seoData = await HomeSeoFunction();
+    homeHeroData = await HomeHeroFunction();
+    inspiringHealthySmilesData = await InspiringHealthySmilesFunction();
+    videoSectionData = await VideoSectionFunction();
+    weLoveFamiliesData = await WeLoveFamiliesFunction();
+    generationalDentalCareData = await GenerationalDentalCareFunction();
+    teamPhotoData = await TeamPhotoFunction();
+    ourServicesData = await OurServicesFunction();
+    sleepData = await SleepFunction();
+    youllLoveItHereData = await YoullLoveItHereFunction();
+    connectWithUsData = await ConnectWithUsFunction();
+    financingData = await FinancingFunction();
+    onlinePaymentsData = await OnlinePaymentsFunction();
+    organizationsData = await OrganizationsFunction();
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+
 
 ---
 <Layout>
-<ul>
-  {topLevelPages.map(page => {
-
-    return (
-    <li>
-      <a href={page.data.uri}>{page.data.title}</a>
-      {page.data.children.length > 0 && (
-        <ul>
-          {page.data.children.map((child) => {
-            
-            return (
-            <li>
-              <a href={child.uri}>{child.title}</a>
-            </li>
-          )})}
-        </ul>
-      )}
-    </li>
-  )})}
-</ul>
+  <title slot="head">{seoData[0].data?.title}</title>
+  <link slot="head" rel="icon" href={seoData[0].data?.favicon}>
+  <link slot="head" rel="canonical" href={seoData[0].data?.canonicalUrl ?? ''}>
+  <meta slot="head" name="description" content={seoData[0].data?.metaDescription ?? ''}>
+  <meta slot="head" property="og:title" content={seoData[0].datatitle ?? ''}>
+  <meta slot="head" name="image" content={seoData[0].data?.ogImage ?? ''}>
+  <meta slot="head" property="og:url" content={seoData[0].data?.ogUrl ?? ''}>
+  <meta slot="head" property="og:site_name" content={seoData[0].data?.ogSiteName ?? ''}>
+  <meta slot="head" property="og:title" content={seoData[0].data?.ogTitle ?? ''}>
+  <meta slot="head" property="og:description" content={seoData[0].data?.ogDescription ?? ''}>
+  <meta slot="head" property="og:image" content={seoData[0].data?.ogImage ?? ''}>
+  <meta slot="head" name="twitter:card" content="summary_large_image">
+  <meta slot="head" name="twitter:title" content={seoData[0].data?.twitterTitle ?? ''}>
+  <meta slot="head" name="twitter:description" content={seoData[0].data?.twitterDescription ?? ''}>
+  <meta slot="head" name="twitter:image" content={seoData[0].data?.twitterImage ?? ''}>
+    <main class="rfs:pt-[20rem] sm:rfs:pt-[18rem] md:rfs:pt-[15rem] lg:pt-0">
+      <HomeHero homeHeroData={homeHeroData[0].data} />
+      <YoullLoveItHere data={inspiringHealthySmilesData[0].data} />
+      <VideoSection videoSectionData={videoSectionData[0].data} client:visible />
+      <YoullLoveItHere data={weLoveFamiliesData[0].data} />
+      <GenerationalDentalCare data={generationalDentalCareData[0].data} />
+        <Image
+          src={`/.netlify/images?url=${teamPhotoData[0].data.image.sourceUrl}`}
+          width={teamPhotoData[0].data.image.mediaDetails.width}
+          height={teamPhotoData[0].data.image.mediaDetails.height}
+          alt={teamPhotoData[0].data.altText}
+        />
+        <div class="lg:grid lg:grid-cols-2">
+          <OurServices ourServicesData={ourServicesData[0].data} />
+          <Sleep sleepData={sleepData[0].data} />
+        </div>
+        <YoullLoveItHere data={youllLoveItHereData[0].data} />
+        <ConnectWithUs connectWithUsData={connectWithUsData[0].data} client:visible />
+        <div class="lg:grid lg:grid-cols-2">
+          <Financing financingData={financingData[0].data} />
+          <OnlinePayments onlinePaymentsData={onlinePaymentsData[0].data} />
+        </div>
+        <Organizations organizationsData={organizationsData[0].data} />
+    </main>
 </Layout>

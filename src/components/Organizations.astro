@@ -1,0 +1,48 @@
+---
+import { Image } from "@unpic/astro";
+// Assume organizationsData is passed to the component as a prop
+const organizationsData = Astro.props.organizationsData;
+---
+<div class="container mx-auto">
+  <div class="splide" aria-label="Organizations Slider">
+    <div class="splide__track">
+      <ul class="splide__list">
+        {organizationsData.organizations?.map(organization => (
+          <li class="splide__slide">
+            <Image
+              src={`/.netlify/images?url=${organization.image.sourceUrl}`}
+              width={organization.image.mediaDetails.width}
+              height={organization.image.mediaDetails.height}
+              alt={organization.altText}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</div>
+<script>
+    import "@splidejs/splide/css";
+    import Splide from "@splidejs/splide";
+  
+    new Splide(".splide", {
+        arrows: false,
+      pagination: false,
+      mediaQuery: 'min',
+      fixedWidth: '66.66%',
+      drag: 'free',
+      breakpoints: {
+        576: {
+          fixedWidth: '40%',
+        },
+        768: {
+          fixedWidth: '28.57%',
+        },
+        1440: {
+          fixedWidth: '',
+          perPage: 6,
+          drag: false,
+        },
+      },
+    }).mount();
+  </script>

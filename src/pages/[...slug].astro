@@ -1,6 +1,16 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../layouts/Layout.astro";
+import { SeoFunction, HeroDefaultFunction, OurServicesFunction, SleepFunction, YoullLoveItHereFunction, ConnectWithUsFunction, OrganizationsFunction } from "../DataImports";
+import { InteriorSection1 } from '../components/InteriorSection1'
+import { ContactForm } from '../components/ContactForm'
+import { InteriorSection2 } from '../components/InteriorSection2'
+import { InteriorSection3 } from '../components/InteriorSection3'
+import { OurServices } from '../components/OurServices';
+import { Sleep } from '../components/Sleep';
+import { YoullLoveItHere } from '../components/YoullLoveItHere'
+import { ConnectWithUs } from '../components/ConnectWithUs';
+import Organizations from '../components/Organizations.astro';
 
 // Define getStaticPaths to generate all dynamic routes
 export async function getStaticPaths() {
@@ -33,32 +43,96 @@ if (!page) {
 
 // Destructure the necessary data from the page
 const { title, seo, featuredImage, contentSection1, contentSection2, faqs, contentSection3 } = page.data;
+
+
+
+let seoData;
+let heroDefault;
+let ourServicesData; 
+let sleepData;
+let youllLoveItHereData;
+let connectWithUsData;
+let organizationsData
+  try {
+    seoData = await SeoFunction(seo);
+    heroDefault = await HeroDefaultFunction();
+    ourServicesData = await OurServicesFunction();
+    sleepData = await SleepFunction();
+    youllLoveItHereData = await YoullLoveItHereFunction();
+    connectWithUsData = await ConnectWithUsFunction();
+    organizationsData = await OrganizationsFunction();
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+  }
+ 
+ 
 ---
 <Layout>
-    <h1>{title}</h1>
-    <section>
-      <h2>SEO Information</h2>
-      <p>Meta Description: {seo.metaDesc}</p>
-      <p>OpenGraph Title: {seo.opengraphTitle}</p>
-    </section>
-    <section>
-      <h2>Featured Image</h2>
-      {featuredImage?.node?.sourceUrl && (
-        <img src={featuredImage.node.sourceUrl} alt={seo.title} />
-      )}
-    </section>
-    <section>
-      <h2>Content Section 1</h2>
-      <div set:html={contentSection1?.contentSection1?.content}></div>
-  
-      {contentSection1?.contentSection1?.image?.sourceUrl && (
-        <img
-          src={contentSection1.contentSection1.image.sourceUrl}
-          alt={contentSection1.contentSection1.altText}
-          width={contentSection1.contentSection1.image.mediaDetails.width}
-          height={contentSection1.contentSection1.image.mediaDetails.height}
+  <title slot="head">{seoData?.title}</title>
+  <link slot="head" rel="icon" href={seoData?.favicon}>
+  <link slot="head" rel="canonical" href={seoData?.canonicalUrl}>
+  <meta slot="head" name="description" content={seoData?.metaDescription}>
+  <meta slot="head" property="og:title" content={seoData?.title}>
+  <meta slot="head" name="image" content={seoData?.ogImage}>
+  <meta slot="head" property="og:url" content={seoData?.ogUrl}>
+  <meta slot="head" property="og:site_name" content={seoData?.ogSiteName}>
+  <meta slot="head" property="og:title" content={seoData?.ogTitle}>
+  <meta slot="head" property="og:description" content={seoData?.ogDescription}>
+  <meta slot="head" property="og:image" content={seoData?.ogImage}>
+  <meta slot="head" name="twitter:card" content="summary_large_image">
+  <meta slot="head" name="twitter:title" content={seoData?.twitterTitle}>
+  <meta slot="head" name="twitter:description" content={seoData?.twitterDescription}>
+  <meta slot="head" name="twitter:image" content={seoData?.twitterImage}>
+   <div>
+    <main class="page">
+      {featuredImage !== undefined && featuredImage !== null ? (
+        <div
+          style={{
+            backgroundImage: `url(/.netlify/images?url=${featuredImage.node.sourceUrl})`,
+          }}
+          class="h-[21.875rem] lg:h-[34.375rem] bg-center bg-cover"
+        />
+      ) : (
+        <div
+          style={{ backgroundImage: `url(/.netlify/images?url=${heroDefault[0].data.sourceUrl})` }}
+          class="h-[21.875rem] lg:h-[34.375rem] bg-center bg-cover"
         />
       )}
-    </section>
+      <InteriorSection1 pageData={contentSection1} />
+      {title === 'Contact' && <ContactForm />}
+      {title === 'Reviews' && (
+        <>
+          <script
+            type="text/javascript"
+            src="https://localreviews.buzz/embed/v7/169599285145449/3/9876543213315183"
+            async
+          />
+          <div class="container">
+            <div class="inline-block w-full lg:w-[40rem]">
+              <div id="bf-revz-widget-9876543213315183" />
+            </div>
+          </div>
+        </>
+      )}
+      {contentSection2 !== undefined && (
+        <InteriorSection2 pageData={contentSection2} />
+      )}
+      <div
+      class="rfs:pt-[12.3125rem]"
+    >
+    {contentSection3 !== undefined &&
+    <InteriorSection3 pageData={contentSection3} />
+    }
+    
+    </div>
+    </main>
+    <div class="lg:grid lg:grid-cols-2">
+      <OurServices ourServicesData={ourServicesData[0].data} />
+      <Sleep sleepData={sleepData[0].data} />
+      </div>
+      <YoullLoveItHere data={youllLoveItHereData[0].data} />
+      <ConnectWithUs connectWithUsData={connectWithUsData[0].data} client:visible />
+      <Organizations organizationsData={organizationsData[0].data} />
+   </div>
    
 </Layout>
