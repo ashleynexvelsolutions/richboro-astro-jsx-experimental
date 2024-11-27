@@ -1,5 +1,5 @@
-import { Button } from './Button'
-import { VideoImage } from './VideoImage'
+import { Button } from "./Button";
+import { VideoImage } from "./VideoImage";
 
 const VideoSection = ({ videoSectionData }) => {
   return (
@@ -27,12 +27,12 @@ const VideoSection = ({ videoSectionData }) => {
                   text={button.buttonText}
                   video={button.videoUrl}
                 />
-              )
+              );
             })}
           </div>
         </div>
       </div>
     </section>
-  )
-}
-export { VideoSection }
+  );
+};
+export { VideoSection };

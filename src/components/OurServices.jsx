@@ -1,4 +1,4 @@
-import { transformURLs } from '../utils/transformURLs'
+import { transformURLs } from "../utils/transformURLs";
 
 const OurServices = ({ ourServicesData }) => {
   return (
@@ -19,11 +19,11 @@ const OurServices = ({ ourServicesData }) => {
                 </a>
                 <hr />
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
-}
-export { OurServices }
+  );
+};
+export { OurServices };
