@@ -13,7 +13,7 @@ import { Financing } from '../components/Financing'
 import { OnlinePayments } from '../components/OnlinePayments'
 import { AnimatedSection } from '../components/AnimatedSection'
 import Organizations from '../components/Organizations.astro';
-
+import { AoStest } from '@ashleynexvelsolutions/ao-stest' 
 
 
 
@@ -94,6 +94,7 @@ try {
           <OnlinePayments onlinePaymentsData={onlinePaymentsData[0].data} />
         </div>
         <Organizations organizationsData={organizationsData[0].data} />
+        <AoStest somethingDescriptive="Animate on Scroll Test" fontColor="text-black" />
         <AnimatedSection />
     </main>
 </Layout>
