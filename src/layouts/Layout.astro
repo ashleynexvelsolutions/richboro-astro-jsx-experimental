@@ -4,6 +4,7 @@ import { Footer } from '../components/Footer'
 import { FooterFunction, HeaderFunction } from '../DataImports'
 import { AstroFont } from "astro-font";  
 import { Header } from '../components/Header'
+import 'aos/dist/aos.css';
 
 let headerData
 let footerData
@@ -115,5 +116,9 @@ try {
   
     gtag('config', 'G-EQH496LMM2');
           </script>
+		  <script>
+			import AOS from "aos";
+			AOS.init();
+		  </script>
   </body>
 </html>
